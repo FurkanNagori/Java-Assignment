@@ -22,10 +22,7 @@ public class Assignment2 {
                     Circle circle = new Circle(radius);
                     circle.calculateArea();
                     circle.calculateCircumference();
-                    //calculated shape now if user want to continue.
-                    System.out.print("Do you want to continue (type yes/no) : ");
-                    againOperation = sc.next();
-
+                    break;
                 case 2: // 2 means rectangle
                     System.out.println("Rectangle selected ");
                     System.out.print("Enter the length of rectangle: ");
@@ -37,10 +34,7 @@ public class Assignment2 {
                     Rectangle rectangle = new Rectangle(length, width);
                     rectangle.calculateArea();
                     rectangle.calculatePerimeter();
-                    //calculated shape now if user want to continue.
-                    System.out.print("Do you want to continue (type yes/no) : ");
-                    againOperation = sc.next();
-
+                    break;
                 case 3: // 3 means Triangle.
                     System.out.println("Triangle selected ");
                     System.out.print("Enter the base of Triangle: ");
@@ -51,10 +45,7 @@ public class Assignment2 {
                     height = sc.nextDouble();
                     Triangle triangle = new Triangle(base, height);
                     triangle.calculateArea();
-                    //calculated shape now if user want to continue.
-                    System.out.print("Do you want to continue (type yes/no) : ");
-                    againOperation = sc.next();
-
+                    break;
                 case 4: // 4 means Square
                     System.out.println("Square selected ");
                     System.out.print("Enter the side of Square: ");
@@ -63,9 +54,7 @@ public class Assignment2 {
                     Square square = new Square(side);
                     square.calculateArea();
                     square.calculatePerimeter();
-                    //calculated shape now if user want to continue.
-                    System.out.print("Do you want to continue (type yes/no) : ");
-                    againOperation = sc.next();
+                    break;
 
                 case 5: // 5 means Sphere
                     System.out.println("Sphere selected ");
@@ -75,9 +64,8 @@ public class Assignment2 {
                     sphere.calculateVolume();
                     sphere.calculateCircumference();
                     sphere.calculateSurfaceArea();
-                    //calculated shape now if user want to continue.
-                    System.out.print("Do you want to continue (type yes/no) : ");
-                    againOperation = sc.next();
+                    break;
+
 
                 case 6: // 6 means Cylinder
                     System.out.println("Cylinder selected ");
@@ -89,11 +77,12 @@ public class Assignment2 {
                     cylinder.calculateVolume();
                     cylinder.calculateSurfaceArea();
                     //calculated shape now if user want to continue.
-                    System.out.print("Do you want to continue (type yes/no) : ");
-                    againOperation = sc.next();
-                    //default: return;
-            }
+                    break;
 
+            }
+            System.out.print("Do you want to continue (type yes/no) : ");
+            sc.nextLine();
+            againOperation = sc.nextLine();
         } while (againOperation.equalsIgnoreCase("yes"));
 
     }
