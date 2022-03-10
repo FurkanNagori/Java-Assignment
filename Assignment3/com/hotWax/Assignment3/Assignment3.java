@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,8 +12,8 @@ public class Assignment3 {
             Scanner sc = new Scanner(System.in);
             System.out.println("1. View");
             System.out.println("2. Add");
-            System.out.println("3. Search");
-            System.out.println("4. Delete");
+            System.out.println("3. Delete");
+            System.out.println("4. Search");
             System.out.print("Enter your choice : ");
             option = sc.nextInt();
         } catch (InputMismatchException imme) {
@@ -30,11 +31,13 @@ public class Assignment3 {
         Date dateOfBirth;
         String emailId;
         int age;
+        int employeeId;
+        EmployeeDAO employeeDAO;
         do {
             option = CRUDOptions(); //calling method for menu of CRUD.
             switch (option) {
                 case 1: //1 for View all employee.
-                    EmployeeDAO employeeDAO = new EmployeeDAO();
+                     employeeDAO = new EmployeeDAO();
                     employeeDAO.getAll();
                     break;
 
@@ -55,6 +58,7 @@ public class Assignment3 {
                         employee.setDateOfBirth(dateOfBirth);
                         employee.setEmailId(emailId);
                         employee.setAge(age);
+                       // employee.setDateOfBirth(dateOfBirth);
                         employeeDAO = new EmployeeDAO();
                         employeeDAO.add(employee);
                         break;
@@ -65,6 +69,20 @@ public class Assignment3 {
                     }
 
                 case 3: //3 for delete a employee.
+                    System.out.print("Enter employee id for deleting a employee : ");
+                    employeeId = sc.nextInt();
+                    try{
+                        employeeDAO = new EmployeeDAO();
+                        employeeDAO.delete(employeeId);
+
+                    }catch(DAOException daoException){
+                        System.out.println(daoException.getMessage());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
                 case 4: // for search a employee
                     break;
