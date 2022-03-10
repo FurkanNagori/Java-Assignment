@@ -1,17 +1,17 @@
+import java.util.Date;
 
-
-    public class Employee implements java.io.Serializable,Comparable<Employee>
+public class Employee implements java.io.Serializable,Comparable<Employee>
     {
         private String employeeId;
         private String name;
-        private String dateOfBirth;
+        private Date dateOfBirth;
         private String emailId;
         private int age;
         public Employee()
         {
             this.employeeId="";
             this.name="";
-            this.dateOfBirth="";
+            this.dateOfBirth=null;
             this.emailId="";
             this.age=0;
         }
@@ -33,11 +33,11 @@
         {
             return this.name;
         }
-        public void setDateOfBirth(String dateOfBirth)
+        public void setDateOfBirth(Date dateOfBirth)
         {
             this.dateOfBirth=dateOfBirth;
         }
-        public String getDateOfBirth()
+        public Date getDateOfBirth()
         {
             return this.dateOfBirth;
         }
