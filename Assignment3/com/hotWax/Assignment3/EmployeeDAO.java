@@ -86,20 +86,7 @@ public class EmployeeDAO {
         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
         String fString = randomAccessFile.readLine();
         String array[] = fString.split(",");
-        Employee employee;
-        int j=0;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        List<Employee> tempList = new ArrayList<>();
-        for(int i=0; i< array.length/5; i++){
-            employee = new Employee();
-            employee.setEmployeeId(array[j]);
-            employee.setName(array[j+1]);
-            employee.setDateOfBirth(simpleDateFormat.parse(array[j+2]));
-            employee.setEmailId(array[j+3]);
-            employee.setAge(Integer.parseInt(array[j+4]));
-            tempList.add(employee);
-            j = j+5;
-        }
+        List<Employee> tempList = createArrayList(array);
         boolean flag=false;
         for(int i=0; i<tempList.size(); i++)
         {
@@ -111,6 +98,7 @@ public class EmployeeDAO {
                 break;
             }
         }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         if(flag==true){System.out.println("employee deleted successfully");}
         file = new File("Employees.txt");
         randomAccessFile = new RandomAccessFile(file,"rw");
@@ -122,7 +110,75 @@ public class EmployeeDAO {
             randomAccessFile.writeBytes(tempList.get(i).getEmailId()+",");
             randomAccessFile.writeBytes(String.valueOf(tempList.get(i).getAge())+",");
         }
+        randomAccessFile.close();
 
     }
-}
+    public void searchByEmployeeId(int employeeId) throws DAOException, IOException {
+        if(employeeId<=0){
+            throw new DAOException("Invalid employee id.");
+        }
+         file = new File("Employees.txt");
+        if(!file.exists()) throw new DAOException("file not exist");
+        RandomAccessFile randomAccessFile = new RandomAccessFile(file,"r");
+        String fString = randomAccessFile.readLine();
+        String array[] = fString.split(",");
+        List<Employee> tempList = createArrayList(array);
+        for(int i=0; i<tempList.size(); i++)
+        {
+            if(tempList.get(i).getEmployeeId().equals(String.valueOf(employeeId))) {
+                System.out.print(tempList.get(i).getEmployeeId()+" , ");
+                System.out.print(tempList.get(i).getName()+" , ");
+                System.out.print(tempList.get(i).getDateOfBirth()+" , ");
+                System.out.print(tempList.get(i).getEmailId()+" , ");
+                System.out.println(tempList.get(i).getAge());
+            }
+        }
+        randomAccessFile.close();
 
+    }
+
+    public void searchByName(String name) throws DAOException, IOException {
+        if(name==null){
+            throw new DAOException("Invalid name");
+        }
+        file = new File("Employees.txt");
+        if(!file.exists()) throw new DAOException("file not exist");
+        RandomAccessFile randomAccessFile = new RandomAccessFile(file,"r");
+        String fString = randomAccessFile.readLine();
+        String array[] = fString.split(",");
+        List<Employee> tempList = createArrayList(array);
+        for(int i = 0; i<tempList.size(); i++)
+        {
+            if(tempList.get(i).getName().equalsIgnoreCase(name)) {
+                System.out.print(tempList.get(i).getEmployeeId()+" , ");
+                System.out.print(tempList.get(i).getName()+" , ");
+                System.out.print(tempList.get(i).getDateOfBirth()+" , ");
+                System.out.print(tempList.get(i).getEmailId()+" , ");
+                System.out.println(tempList.get(i).getAge());
+            }
+        }
+        randomAccessFile.close();
+
+    }
+    public List<Employee> createArrayList(String[] array){
+        Employee employee;
+        int j=0;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        List<Employee> tempList = new ArrayList<>();
+        for(int i=0; i< array.length/5; i++){
+            employee = new Employee();
+            employee.setEmployeeId(array[j]);
+            employee.setName(array[j+1]);
+            try {
+                employee.setDateOfBirth(simpleDateFormat.parse(array[j+2]));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            employee.setEmailId(array[j+3]);
+            employee.setAge(Integer.parseInt(array[j+4]));
+            tempList.add(employee);
+            j = j+5;
+        }
+        return tempList;
+    }
+}

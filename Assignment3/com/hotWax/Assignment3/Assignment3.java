@@ -27,11 +27,11 @@ public class Assignment3 {
         Scanner sc = new Scanner(System.in);
         int option;
         String againOperation;
+        int employeeId;
         String name;
         Date dateOfBirth;
         String emailId;
         int age;
-        int employeeId;
         EmployeeDAO employeeDAO;
         do {
             option = CRUDOptions(); //calling method for menu of CRUD.
@@ -85,7 +85,27 @@ public class Assignment3 {
 
                     break;
                 case 4: // for search a employee
-                    break;
+                    System.out.print("Search by employee id/name (for searching type eid/name) : ");
+                    String choice = sc.nextLine();
+                    try {
+                        if (choice.equalsIgnoreCase("eId")) {
+                            System.out.print("Enter employee id : ");
+                            employeeId = sc.nextInt();
+                            employeeDAO = new EmployeeDAO();
+                            employeeDAO.searchByEmployeeId(employeeId);
+                        }
+                        if (choice.equalsIgnoreCase("name")) {
+                            System.out.print("Enter employee name : ");
+                            name = sc.nextLine();
+                            employeeDAO = new EmployeeDAO();
+                            employeeDAO.searchByName(name);
+                        }
+                        break;
+                    }catch(DAOException daoException){
+                        System.out.println(daoException.getMessage());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 default:
                     throw new IllegalStateException("Unexpected value: " + option);
             }
@@ -93,7 +113,5 @@ public class Assignment3 {
             sc.nextLine();
             againOperation = sc.nextLine();
         } while (againOperation.equalsIgnoreCase("yes"));
-
-
     }
 }
