@@ -1,5 +1,4 @@
 import java.util.Date;
-
 public class Employee implements java.io.Serializable,Comparable<Employee>
     {
         private String employeeId;
