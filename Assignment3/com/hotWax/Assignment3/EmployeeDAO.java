@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class EmployeeDAO {
@@ -159,6 +160,66 @@ public class EmployeeDAO {
         }
         randomAccessFile.close();
 
+    }
+    public void sortEmployee(String sortBy)throws DAOException{
+        System.out.println(sortBy);
+        file = new File("Employees.txt");
+        if(!file.exists()) throw new DAOException("file not exist");
+        RandomAccessFile randomAccessFile = null;
+        try {
+            randomAccessFile = new RandomAccessFile(file,"r");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String fString = null;
+        try {
+            fString = randomAccessFile.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String array[] = fString.split(",");
+        List<Employee> tempList = createArrayList(array);
+        if(sortBy.equals("eid")){
+
+            Collections.sort(tempList,(e1, e2)->{
+                 return Integer.parseInt(e1.getEmployeeId()) - Integer.parseInt(e2.getEmployeeId());
+            });
+//            positive then swap
+//            negative no swap
+            printArrayList(tempList);
+        }
+
+        if(sortBy.equals("name")){
+
+            Collections.sort(tempList,(e1, e2)->{
+                return e2.getName().compareTo(e1.getName());
+            });
+//            positive then swap
+//            negative no swap
+            printArrayList(tempList);
+        }
+
+        if(sortBy.equals("age")){
+
+            Collections.sort(tempList,(e1, e2)->{
+                return e1.getAge() - e2.getAge();
+            });
+//            positive then swap
+//            negative no swap
+            printArrayList(tempList);
+        }
+
+
+    }
+    public void printArrayList(List<Employee> tempList){
+        for(int i = 0; i<tempList.size(); i++)
+        {
+            System.out.print(tempList.get(i).getEmployeeId()+" , ");
+            System.out.print(tempList.get(i).getName()+" , ");
+            System.out.print(tempList.get(i).getDateOfBirth()+" , ");
+            System.out.print(tempList.get(i).getEmailId()+" , ");
+            System.out.println(tempList.get(i).getAge());
+        }
     }
     public List<Employee> createArrayList(String[] array){
         Employee employee;

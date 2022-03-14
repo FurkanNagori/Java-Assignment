@@ -14,6 +14,7 @@ public class Assignment3 {
             System.out.println("2. Add");
             System.out.println("3. Delete");
             System.out.println("4. Search");
+            System.out.println("5. Sort");
             System.out.print("Enter your choice : ");
             option = sc.nextInt();
         } catch (InputMismatchException imme) {
@@ -37,7 +38,7 @@ public class Assignment3 {
             option = CRUDOptions(); //calling method for menu of CRUD.
             switch (option) {
                 case 1: //1 for View all employee.
-                     employeeDAO = new EmployeeDAO();
+                    employeeDAO = new EmployeeDAO();
                     employeeDAO.getAll();
                     break;
 
@@ -58,7 +59,7 @@ public class Assignment3 {
                         employee.setDateOfBirth(dateOfBirth);
                         employee.setEmailId(emailId);
                         employee.setAge(age);
-                       // employee.setDateOfBirth(dateOfBirth);
+                        // employee.setDateOfBirth(dateOfBirth);
                         employeeDAO = new EmployeeDAO();
                         employeeDAO.add(employee);
                         break;
@@ -71,11 +72,11 @@ public class Assignment3 {
                 case 3: //3 for delete a employee.
                     System.out.print("Enter employee id for deleting a employee : ");
                     employeeId = sc.nextInt();
-                    try{
+                    try {
                         employeeDAO = new EmployeeDAO();
                         employeeDAO.delete(employeeId);
 
-                    }catch(DAOException daoException){
+                    } catch (DAOException daoException) {
                         System.out.println(daoException.getMessage());
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -101,11 +102,24 @@ public class Assignment3 {
                             employeeDAO.searchByName(name);
                         }
                         break;
-                    }catch(DAOException daoException){
+                    } catch (DAOException daoException) {
                         System.out.println(daoException.getMessage());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
+                case 5: //for sorting the employee.
+
+                    System.out.print("Sort employee by id/name/age (for sorting type eid/name/age) : ");
+                    choice = sc.nextLine();
+                    try {
+                        employeeDAO = new EmployeeDAO();
+                        employeeDAO.sortEmployee(choice);
+                        break;
+                    } catch (DAOException daoException) {
+                        System.out.print(daoException.getMessage());
+                    }
+
                 default:
                     throw new IllegalStateException("Unexpected value: " + option);
             }
