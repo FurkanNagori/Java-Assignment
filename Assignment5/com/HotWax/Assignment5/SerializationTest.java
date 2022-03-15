@@ -24,7 +24,7 @@ public class SerializationTest {
 //serializing list object into output1.ser file.
         FileOutputStream file = null;
         try {
-            file = new FileOutputStream("Output2.ser");
+            file = new FileOutputStream("Output1.ser");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(file);
             objectOutputStream.writeObject(list);
         } catch (FileNotFoundException e) {
