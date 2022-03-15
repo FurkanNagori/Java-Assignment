@@ -4,7 +4,7 @@ import java.util.List;
 public class DeserializationTest {
     public static void main(String gg[]) {
         try {
-            FileInputStream fileInputStream = new FileInputStream("Output1.ser");
+            FileInputStream fileInputStream = new FileInputStream("Output2.ser");
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
             List<Student> list = (List<Student>) objectInputStream.readObject();
             for(int i=0;i<list.size(); i++) {
@@ -19,3 +19,6 @@ public class DeserializationTest {
         }
     }
 }
+
+
+
