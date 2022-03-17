@@ -4,10 +4,7 @@ import org.jsoup.nodes.Document;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class CountWordsInUrl {
     private String url;
@@ -16,37 +13,45 @@ public class CountWordsInUrl {
         this.url = url;
     }
 
-    public Map<String, Integer> getData() {
+    public void getData() {
         Map<String, Integer> dataMap = null;
         try {
             Document document = null;
+            // By using jsoup we are reading data from url in html form first.
             document = Jsoup.connect(url).get();
-            List<String> urlDataList = new ArrayList<>();
-            urlDataList = List.of(document.text().split(" "));
+            // now url data spliting by space.
+            List<String> urlDataList = List.of(document.text().split(" "));
             File file = new File("words.txt");
             RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
-            List<String> fileDataList = new ArrayList<>();
-            fileDataList = List.of(randomAccessFile.readLine().split(","));
+            // now words.txt data spliting by comma.
+            List<String> fileDataList = List.of(randomAccessFile.readLine().split(","));
             dataMap = new HashMap<>();
+            // using count var form checking frequency.
             int count = 0;
             for (int i = 0; i < fileDataList.size(); i++) {
                 for (int j = 0; j < urlDataList.size(); j++) {
+                    // comparing word of word.txt file with url text data if equals increase count.
                     if (fileDataList.get(i).equalsIgnoreCase(urlDataList.get(j))) {
                         count++;
                     }
                 }
+                // and here put the word and its frequency in map.
                 dataMap.put(fileDataList.get(i), count);
                 count = 0;
             }
-            System.out.println("For URL : "+url);
-            for (Map.Entry<String, Integer> entry : dataMap.entrySet()) {
-                System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-            }
+            // now sorting the map through values means its frequency.
+            Set<Map.Entry<String, Integer>> entries = dataMap.entrySet();
+            ArrayList<Map.Entry<String, Integer>> arr = new ArrayList<>(entries);
+            Collections.sort(arr, (e1, e2) -> {
+                return e2.getValue() - e1.getValue();
+            });
+            // printing sorted.
+            System.out.println("Sorted data by frequency in url : " + url);
+            System.out.println(arr);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return dataMap;
     }
 
 }
