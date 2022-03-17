@@ -11,7 +11,6 @@ public class Assignment1 {
         try {
             randomAccessFile = new RandomAccessFile(file, "r");
             String url1 = randomAccessFile.readLine();
-            System.out.println(url1);
             CountWordsInUrl countWordsInUrl = new CountWordsInUrl(url1);
             countWordsInUrl.getData();
             randomAccessFile.close();
